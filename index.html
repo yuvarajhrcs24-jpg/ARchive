@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>ARchive Smart Tour Guide</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="top-bar">
+      <h1>ARchive</h1>
+      <button id="downloadOffline">Download City Data</button>
+    </header>
+
+    <nav class="tabs">
+      <button data-screen="home" class="active">Home</button>
+      <button data-screen="map">Map</button>
+      <button data-screen="saved">Saved</button>
+      <button data-screen="profile">Profile</button>
+    </nav>
+
+    <main>
+      <section id="home" class="screen active">
+        <input id="searchInput" type="search" placeholder="Search places or categories" />
+        <div id="categories" class="chips"></div>
+        <h2>Nearby Places</h2>
+        <div id="nearbyPlaces" class="list"></div>
+        <h2>Popular Places</h2>
+        <div id="popularPlaces" class="list"></div>
+      </section>
+
+      <section id="map" class="screen">
+        <p id="userLocation">Detecting location...</p>
+        <div id="mapCanvas"></div>
+        <h2>Map Pins</h2>
+        <div id="mapPins" class="list"></div>
+      </section>
+
+      <section id="placeDetail" class="screen">
+        <button id="backToHome" class="inline-button">← Back</button>
+        <img id="detailImage" alt="Place image" class="hero" />
+        <h2 id="detailName"></h2>
+        <p id="detailShort"></p>
+        <p id="detailLong"></p>
+        <p><strong>Opening Hours:</strong> <span id="detailHours"></span></p>
+        <p><strong>Rating:</strong> <span id="detailRating"></span></p>
+        <div class="actions">
+          <button id="playGuide">Listen Guide</button>
+          <button id="navigateBtn">Navigate</button>
+          <button id="saveBtn">Save</button>
+        </div>
+      </section>
+
+      <section id="saved" class="screen">
+        <h2>Saved Places</h2>
+        <div id="savedPlaces" class="list"></div>
+        <h2>Trip Planner</h2>
+        <label>
+          Trip Day
+          <input id="tripDay" placeholder="Day 1" value="Day 1" />
+        </label>
+        <div id="tripStops" class="list"></div>
+      </section>
+
+      <section id="profile" class="screen">
+        <h2>Profile & Settings</h2>
+        <p>Status: <span id="authStatus">Guest mode</span></p>
+        <button id="googleLogin">Login with Google (demo)</button>
+        <label>
+          Language
+          <select id="languageSelect">
+            <option>English</option>
+            <option>Hindi</option>
+            <option>Kannada</option>
+          </select>
+        </label>
+        <p>Offline downloads and bookmarks are synced to local device storage in this demo.</p>
+      </section>
+    </main>
+
+    <template id="placeCardTemplate">
+      <article class="card">
+        <img class="card-image" alt="Place image" />
+        <div>
+          <h3 class="card-title"></h3>
+          <p class="card-subtitle"></p>
+          <p class="card-meta"></p>
+          <div class="card-actions">
+            <button class="preview-btn">Preview</button>
+            <button class="navigate-btn">Navigate</button>
+          </div>
+        </div>
+      </article>
+    </template>
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script src="app.js" defer></script>
+  </body>
+</html>

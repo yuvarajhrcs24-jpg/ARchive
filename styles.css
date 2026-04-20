@@ -1,0 +1,139 @@
+:root {
+  font-family: Inter, system-ui, sans-serif;
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+.top-bar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: #0f172a;
+  color: #fff;
+}
+
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.tabs button {
+  border: 0;
+  padding: 0.75rem;
+  background: #e2e8f0;
+}
+
+.tabs button.active {
+  background: #93c5fd;
+}
+
+main {
+  padding: 1rem;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.screen {
+  display: none;
+}
+
+.screen.active {
+  display: block;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.75rem 0;
+}
+
+.chips button {
+  border-radius: 999px;
+  border: 1px solid #64748b;
+  background: #fff;
+  padding: 0.4rem 0.8rem;
+}
+
+.list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+#mapCanvas {
+  height: 360px;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  box-shadow: 0 1px 3px rgb(15 23 42 / 0.1);
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 0.75rem;
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 0.75rem;
+  box-shadow: 0 1px 3px rgb(15 23 42 / 0.1);
+}
+
+.card-image,
+.hero {
+  width: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.hero {
+  max-height: 320px;
+}
+
+.card-title {
+  margin: 0;
+}
+
+.card-subtitle {
+  margin: 0.4rem 0;
+  color: #475569;
+}
+
+.card-meta {
+  margin: 0;
+  font-size: 0.92rem;
+}
+
+.card-actions,
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+}
+
+button,
+select,
+input {
+  border-radius: 8px;
+  border: 1px solid #94a3b8;
+  padding: 0.5rem 0.7rem;
+  font: inherit;
+}
+
+.inline-button {
+  margin-bottom: 0.75rem;
+}
+
+@media (max-width: 640px) {
+  .card {
+    grid-template-columns: 1fr;
+  }
+}
