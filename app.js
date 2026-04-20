@@ -1,6 +1,9 @@
 const APP_STORAGE_KEY = "archive-smart-tour";
 const TRIP_STORAGE_KEY = "archive-trips";
 const OFFLINE_CACHE = "archive-offline-city-data-v1";
+const MIN_TRAVEL_TIME_MINS = 5;
+const AVERAGE_SPEED_KMH = 30;
+const MINS_PER_HOUR = 60;
 
 const state = {
   userLocation: null,
@@ -61,7 +64,7 @@ function getDistanceKm(lat1, lon1, lat2, lon2) {
 }
 
 function estimateTravelTime(distanceKm) {
-  const mins = Math.max(5, Math.round((distanceKm / 30) * 60));
+  const mins = Math.max(MIN_TRAVEL_TIME_MINS, Math.round((distanceKm / AVERAGE_SPEED_KMH) * MINS_PER_HOUR));
   return `${mins} min`;
 }
 
@@ -245,7 +248,9 @@ function renderSaved() {
   Object.entries(state.trips).forEach(([day, placeIds]) => {
     if (!placeIds.length) return;
     const section = document.createElement("section");
-    section.innerHTML = `<h3>${day}</h3>`;
+    const dayHeading = document.createElement("h3");
+    dayHeading.textContent = day;
+    section.appendChild(dayHeading);
     placeIds.forEach((id) => {
       const place = state.places.find((p) => p.id === id);
       if (!place) return;
@@ -296,14 +301,22 @@ function renderMap(places) {
 function playGuide(place) {
   const selectedLanguage = languageSelect.value;
   const message = place.languages[selectedLanguage] || place.languages.English || place.shortDescription;
-  const utter = new SpeechSynthesisUtterance(message);
-  speechSynthesis.cancel();
-  speechSynthesis.speak(utter);
+  const playFallbackAudio = () => {
+    const fallbackAudio = new Audio(place.audio);
+    fallbackAudio.play().catch(() => {
+      // Browser may block autoplay or unsupported codec in sandbox.
+    });
+  };
 
-  const fallbackAudio = new Audio(place.audio);
-  fallbackAudio.play().catch(() => {
-    // Browser may block autoplay or unsupported codec in sandbox.
-  });
+  if ("speechSynthesis" in window && "SpeechSynthesisUtterance" in window) {
+    const utter = new SpeechSynthesisUtterance(message);
+    utter.onerror = () => playFallbackAudio();
+    speechSynthesis.cancel();
+    speechSynthesis.speak(utter);
+    return;
+  }
+
+  playFallbackAudio();
 }
 
 function maybeAutoplayNearbyGuide() {

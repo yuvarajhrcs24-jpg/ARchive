@@ -14,7 +14,7 @@ A minimal location-based smart tour guide web app prototype with:
 ## Run locally
 
 ```bash
-cd /home/runner/work/ARchive/ARchive
+cd /path/to/ARchive
 python -m http.server 8000
 ```
 
