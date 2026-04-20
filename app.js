@@ -1,9 +1,18 @@
-const APP_STORAGE_KEY = "archive-smart-tour";
-const TRIP_STORAGE_KEY = "archive-trips";
+const SAVED_PLACES_STORAGE_KEY = "archive-saved-places";
+const LEGACY_SAVED_PLACES_STORAGE_KEY = "archive-smart-tour";
+const TRIP_PLANNER_STORAGE_KEY = "archive-trip-planner";
+const LEGACY_TRIP_PLANNER_STORAGE_KEY = "archive-trips";
 const OFFLINE_CACHE = "archive-offline-city-data-v1";
-const MIN_TRAVEL_TIME_MINS = 5;
+const AUTOPLAY_STORAGE_KEY = "archive-autoplay-enabled";
+// Minimum ETA shown for very short routes.
+const MIN_DISPLAYED_TRAVEL_TIME_MINS = 5;
+// Assumed city travel speed to estimate route time without live traffic.
 const AVERAGE_SPEED_KMH = 30;
-const MINS_PER_HOUR = 60;
+const MINUTES_PER_HOUR = 60;
+// "Near me" discovery radius in kilometers.
+const NEARBY_RADIUS_KM = 25;
+// Distance threshold in kilometers for auto-playing nearby guides.
+const AUTOPLAY_RADIUS_KM = 0.3;
 
 const state = {
   userLocation: null,
@@ -11,9 +20,14 @@ const state = {
   filteredCategory: "All",
   searchQuery: "",
   activePlace: null,
-  saved: JSON.parse(localStorage.getItem(APP_STORAGE_KEY) || "[]"),
-  trips: JSON.parse(localStorage.getItem(TRIP_STORAGE_KEY) || "{}"),
+  saved: JSON.parse(
+    localStorage.getItem(SAVED_PLACES_STORAGE_KEY) || localStorage.getItem(LEGACY_SAVED_PLACES_STORAGE_KEY) || "[]"
+  ),
+  trips: JSON.parse(
+    localStorage.getItem(TRIP_PLANNER_STORAGE_KEY) || localStorage.getItem(LEGACY_TRIP_PLANNER_STORAGE_KEY) || "{}"
+  ),
   language: localStorage.getItem("archive-language") || "English",
+  autoplayEnabled: localStorage.getItem(AUTOPLAY_STORAGE_KEY) !== "false",
 };
 
 const categories = ["All", "Historical", "Food", "Nature", "Temples"];
@@ -40,6 +54,7 @@ const playGuideBtn = document.getElementById("playGuide");
 const navigateBtn = document.getElementById("navigateBtn");
 const saveBtn = document.getElementById("saveBtn");
 const languageSelect = document.getElementById("languageSelect");
+const autoplayToggle = document.getElementById("autoplayToggle");
 const authStatus = document.getElementById("authStatus");
 let mapInstance;
 let mapMarkers = [];
@@ -64,7 +79,7 @@ function getDistanceKm(lat1, lon1, lat2, lon2) {
 }
 
 function estimateTravelTime(distanceKm) {
-  const mins = Math.max(MIN_TRAVEL_TIME_MINS, Math.round((distanceKm / AVERAGE_SPEED_KMH) * MINS_PER_HOUR));
+  const mins = Math.max(MIN_DISPLAYED_TRAVEL_TIME_MINS, Math.round((distanceKm / AVERAGE_SPEED_KMH) * MINUTES_PER_HOUR));
   return `${mins} min`;
 }
 
@@ -73,11 +88,11 @@ function isSaved(placeId) {
 }
 
 function persistSaved() {
-  localStorage.setItem(APP_STORAGE_KEY, JSON.stringify(state.saved));
+  localStorage.setItem(SAVED_PLACES_STORAGE_KEY, JSON.stringify(state.saved));
 }
 
 function persistTrips() {
-  localStorage.setItem(TRIP_STORAGE_KEY, JSON.stringify(state.trips));
+  localStorage.setItem(TRIP_PLANNER_STORAGE_KEY, JSON.stringify(state.trips));
 }
 
 function filteredPlaces() {
@@ -96,7 +111,7 @@ function filteredPlaces() {
         place.name.toLowerCase().includes(query) ||
         place.category.toLowerCase().includes(query) ||
         place.shortDescription.toLowerCase().includes(query);
-      const nearbyMatch = place.distance === null || place.distance <= 25;
+      const nearbyMatch = place.distance === null || place.distance <= NEARBY_RADIUS_KM;
       return categoryMatch && queryMatch && nearbyMatch;
     })
     .sort((a, b) => (a.distance || 999) - (b.distance || 999));
@@ -303,8 +318,8 @@ function playGuide(place) {
   const message = place.languages[selectedLanguage] || place.languages.English || place.shortDescription;
   const playFallbackAudio = () => {
     const fallbackAudio = new Audio(place.audio);
-    fallbackAudio.play().catch(() => {
-      // Browser may block autoplay or unsupported codec in sandbox.
+    fallbackAudio.play().catch((error) => {
+      console.warn(`Audio guide playback failed for place: ${place.name} (${place.audio})`, error);
     });
   };
 
@@ -320,9 +335,9 @@ function playGuide(place) {
 }
 
 function maybeAutoplayNearbyGuide() {
-  if (!state.userLocation || !state.places.length) return;
+  if (!state.autoplayEnabled || !state.userLocation || !state.places.length) return;
   const nearest = filteredPlaces()[0];
-  if (nearest?.distance !== undefined && nearest.distance <= 0.3) {
+  if (nearest?.distance !== undefined && nearest.distance <= AUTOPLAY_RADIUS_KM) {
     playGuide(nearest);
   }
 }
@@ -412,6 +427,12 @@ function wireEvents() {
   languageSelect.addEventListener("change", () => {
     state.language = languageSelect.value;
     localStorage.setItem("archive-language", state.language);
+  });
+
+  autoplayToggle.checked = state.autoplayEnabled;
+  autoplayToggle.addEventListener("change", () => {
+    state.autoplayEnabled = autoplayToggle.checked;
+    localStorage.setItem(AUTOPLAY_STORAGE_KEY, String(state.autoplayEnabled));
   });
 }
 
