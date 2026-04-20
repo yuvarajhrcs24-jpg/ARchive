@@ -1,0 +1,15 @@
+{
+  "name": "ARchive Smart Tour Guide",
+  "short_name": "ARchive",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "assets/images/mysore-palace.svg",
+      "sizes": "600x320",
+      "type": "image/svg+xml"
+    }
+  ]
+}

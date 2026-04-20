@@ -1,0 +1,74 @@
+[
+  {
+    "id": "mysore-palace",
+    "name": "Mysore Palace",
+    "category": "Historical",
+    "lat": 12.3051,
+    "lng": 76.6551,
+    "shortDescription": "Royal palace known for Indo-Saracenic architecture.",
+    "detailedDescription": "Mysore Palace is one of India’s most visited heritage sites, famous for its ornate halls, illuminated evenings, and rich Wadiyar history.",
+    "openingHours": "10:00 AM - 5:30 PM",
+    "rating": 4.7,
+    "image": "assets/images/mysore-palace.svg",
+    "audio": "assets/audio/mysore-palace.wav",
+    "languages": {
+      "English": "Welcome to Mysore Palace. Explore the royal heritage and architecture.",
+      "Hindi": "मैसूर पैलेस में आपका स्वागत है। शाही विरासत और वास्तुकला का आनंद लें।",
+      "Kannada": "ಮೈಸೂರು ಅರಮನೆಗೆ ಸ್ವಾಗತ. ರಾಜವಂಶದ ಇತಿಹಾಸ ಮತ್ತು ವಾಸ್ತುಶಿಲ್ಪವನ್ನು ಅನುಭವಿಸಿ."
+    }
+  },
+  {
+    "id": "lalbagh",
+    "name": "Lalbagh Botanical Garden",
+    "category": "Nature",
+    "lat": 12.9507,
+    "lng": 77.5848,
+    "shortDescription": "Historic botanical garden with a famous glass house.",
+    "detailedDescription": "Lalbagh features rare tropical plants, serene walking paths, and seasonal flower shows in Bengaluru.",
+    "openingHours": "6:00 AM - 7:00 PM",
+    "rating": 4.6,
+    "image": "assets/images/lalbagh.svg",
+    "audio": "assets/audio/lalbagh.wav",
+    "languages": {
+      "English": "You are at Lalbagh, a peaceful botanical landmark in Bengaluru.",
+      "Hindi": "आप लालबाग में हैं, जो बेंगलुरु का सुंदर वनस्पति उद्यान है।",
+      "Kannada": "ನೀವು ಲಾಲ್‌ಬಾಗ್‌ನಲ್ಲಿ ಇದ್ದೀರಿ, ಇದು ಬೆಂಗಳೂರಿನ ಸುಂದರ ಸಸ್ಯೋದ್ಯಾನ."
+    }
+  },
+  {
+    "id": "vidyarthi-bhavan",
+    "name": "Vidyarthi Bhavan",
+    "category": "Food",
+    "lat": 12.9468,
+    "lng": 77.5712,
+    "shortDescription": "Iconic Bengaluru eatery for crispy dosas.",
+    "detailedDescription": "Established in 1943, Vidyarthi Bhavan is renowned for traditional South Indian breakfast and its vibrant local culture.",
+    "openingHours": "6:30 AM - 11:30 AM, 2:00 PM - 8:00 PM",
+    "rating": 4.5,
+    "image": "assets/images/vidyarthi-bhavan.svg",
+    "audio": "assets/audio/vidyarthi-bhavan.wav",
+    "languages": {
+      "English": "Taste one of Bengaluru’s most famous dosas at Vidyarthi Bhavan.",
+      "Hindi": "विद्यार्थी भवन में बेंगलुरु की मशहूर डोसा का स्वाद लें।",
+      "Kannada": "ವಿದ್ಯಾರ್ಥಿ ಭವನದಲ್ಲಿ ಬೆಂಗಳೂರಿನ ಪ್ರಸಿದ್ಧ ದೋಸೆಯನ್ನು ಸವಿಯಿರಿ."
+    }
+  },
+  {
+    "id": "iskcon-temple",
+    "name": "ISKCON Temple Bengaluru",
+    "category": "Temples",
+    "lat": 13.0107,
+    "lng": 77.5511,
+    "shortDescription": "Large temple complex dedicated to Lord Krishna.",
+    "detailedDescription": "This temple combines spiritual ambience with modern architecture and hosts devotional events and prasadam services.",
+    "openingHours": "4:15 AM - 8:20 PM",
+    "rating": 4.7,
+    "image": "assets/images/iskcon.svg",
+    "audio": "assets/audio/iskcon.wav",
+    "languages": {
+      "English": "Welcome to ISKCON Temple. Experience devotion, chants, and serenity.",
+      "Hindi": "इस्कॉन मंदिर में आपका स्वागत है। भक्ति और शांति का अनुभव करें।",
+      "Kannada": "ಇಸ್ಕಾನ್ ದೇವಾಲಯಕ್ಕೆ ಸ್ವಾಗತ. ಭಕ್ತಿ ಮತ್ತು ಶಾಂತಿಯ ಅನುಭವ ಪಡೆಯಿರಿ."
+    }
+  }
+]
